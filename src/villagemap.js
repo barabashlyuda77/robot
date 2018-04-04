@@ -9,11 +9,10 @@ function buildVillageMap(edges) {
     }
   }
 
-  edges.map(r => r.split("-"))
-        .forEach(function ([from, to]) {
-          addEdge(from, to);
-          addEdge(to, from);
-        });
+  edges.forEach(function ([from, to]) {
+    addEdge(from, to);
+    addEdge(to, from);
+  });
 
   return map;
 }
