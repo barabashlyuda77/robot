@@ -1,5 +1,6 @@
 function buildVillageMap(edges) {
-  let map = Object.create(null);
+  let map = {};
+
   function addEdge(from, to) {
     if (!map[from]) {
       map[from] = [to];
