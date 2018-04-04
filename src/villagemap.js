@@ -17,11 +17,7 @@ function buildVillageMap(edges) {
       map[from].push(to);
     }
   }
-  //not using for
-  // for (let [from, to] of edges.map(r => r.split("-"))) {
-  //   addEdge(from, to);
-  //   addEdge(to, from);
-  // }
+
   edges.map(r => r.split("-"))
         .forEach(function ([from, to]) {
           addEdge(from, to);
