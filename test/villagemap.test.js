@@ -1,5 +1,5 @@
 const { expect } = require('chai');
-const buildVillageMap = require('../src/villagemap.js');
+const buildVillageMap = require('../src/villageMap.js');
 
 describe('buildVillageMap', () => {
   context('when creating a map with one road', () => {
