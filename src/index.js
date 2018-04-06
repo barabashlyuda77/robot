@@ -1,5 +1,5 @@
-const roads = require('../src/config/roads.js');
-const buildVillageMap = require('./villagemap.js');
+const _ = require('lodash');
+const roads = require('../src/config/roads');
 const buildVillageMap = require('./villagemap');
 const { move } = require('./robot');
 
