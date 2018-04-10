@@ -1,6 +1,7 @@
 const { expect } = require('chai');
 const { move } = require('../src/robot');
 const buildVillageMap = require('../src/villageMap');
+const { buildVillageMap } = require('../src/villageMap');
 
 describe('robot', () => {
   context('when a State has one neighbour', () => {
