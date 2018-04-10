@@ -1,5 +1,6 @@
 const { expect } = require('chai');
 const buildVillageMap = require('../src/villageMap');
+const { buildVillageMap, getStates } = require('../src/villageMap');
 
 describe('buildVillageMap', () => {
   context('when creating a map with one road', () => {
@@ -36,5 +37,25 @@ describe('buildVillageMap', () => {
         });
       });
     })
+  });
+});
+
+describe('#getStates', () => {
+  context('when creating a map with two states', () => {
+    const villageMap = buildVillageMap(
+      [['A','B']]);
+
+    it('returns this two states', () => {
+      expect(getStates(villageMap)).to.eql(['A', 'B'])
+    });
+  });
+
+  context('when creating a map with multiple states', () => {
+    const villageMap = buildVillageMap(
+      [['A','B'], ['B', 'C'], ['C', 'D']]);
+
+    it('returns all this states', () => {
+      expect(getStates(villageMap)).to.eql(['A', 'B', 'C', 'D'])
+    });
   });
 });
