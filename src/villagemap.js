@@ -17,9 +17,9 @@ function buildVillageMap(edges) {
   return map;
 }
 
-const toListStates = (map) => Object.keys(map);
+const getStates = (map) => Object.keys(map);
 
 module.exports = {
   buildVillageMap,
-  toListStates
+  getStates
  };
