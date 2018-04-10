@@ -3,6 +3,7 @@ const buildVillageMap = require('../src/villageMap');
 const { buildVillageMap, getStates } = require('../src/villageMap');
 
 describe('buildVillageMap', () => {
+describe('#buildVillageMap', () => {
   context('when creating a map with one road', () => {
     it('returns the map with two edges that connects the passed States', () => {
         expect(buildVillageMap(
