@@ -7,7 +7,7 @@
     "test": "mocha",
     "test:watch": "npm test -- --watch",
     "lint": "eslint .",
-    "lint:fix": "npm run lint -- --fix",
+    "lint:fix": "npm run lint -- --fix"
   },
   "repository": {
     "type": "git",
