@@ -1,5 +1,5 @@
 function buildVillageMap(edges) {
-  let map = {};
+  const map = {};
 
   function addEdge(from, to) {
     if (!map[from]) {
@@ -9,7 +9,7 @@ function buildVillageMap(edges) {
     }
   }
 
-  edges.forEach(function ([from, to]) {
+  edges.forEach(([from, to]) => {
     addEdge(from, to);
     addEdge(to, from);
   });
@@ -17,9 +17,9 @@ function buildVillageMap(edges) {
   return map;
 }
 
-const getStates = (map) => Object.keys(map);
+const getStates = map => Object.keys(map);
 
 module.exports = {
   buildVillageMap,
-  getStates
- };
+  getStates,
+};
