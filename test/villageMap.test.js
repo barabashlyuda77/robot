@@ -1,4 +1,3 @@
-const { expect } = require('chai');
 const { buildVillageMap, getStates } = require('../src/villageMap');
 
 describe('#buildVillageMap', () => {
