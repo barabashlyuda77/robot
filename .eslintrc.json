@@ -4,5 +4,10 @@
       "es6": true,
       "node": true,
       "mocha": true
+  },
+  "globals": {
+      "sinon": true,
+      "proxyquire": true,
+      "expect": true
   }
 }
