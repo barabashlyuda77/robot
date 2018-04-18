@@ -1,4 +1,4 @@
-const { getDestination, createToDoList } = require('../src/task');
+const { getDestination, createTaskList } = require('../src/task');
 
 describe('#getDestination', () => {
   context('when there is one state', () => {
@@ -26,28 +26,28 @@ describe('#getDestination', () => {
   });
 });
 
-describe('#createToDoList', () => {
+describe('#createTaskList', () => {
   context('when there are no states', () => {
     it('returns empty list', () => {
-      expect(createToDoList([])).to.eql([]);
+      expect(createTaskList([])).to.eql([]);
     });
   });
 
   context('when there are two states', () => {
     it('returns two tasks', () => {
-      expect(createToDoList(['A', 'B'], 1).length).to.eql(1);
+      expect(createTaskList(['A', 'B'], 1).length).to.eql(1);
     });
   });
 
   context('when a number of tasks is 0', () => {
     it('returns an empty list', () => {
-      expect(createToDoList(['A', 'B', 'C'], 0)).to.eql([]);
+      expect(createTaskList(['A', 'B', 'C'], 0)).to.eql([]);
     });
   });
 
   context('when a number of task is 5', () => {
     it('returns 5 tasks in a list', () => {
-      expect(createToDoList(['A', 'B', 'C'], 5).length).to.eql(5);
+      expect(createTaskList(['A', 'B', 'C'], 5).length).to.eql(5);
     });
   });
 });
