@@ -1,6 +1,8 @@
 const _ = require('lodash');
+const { getStates } = require('./villageMap');
 
-function getDestination(fromLocation, states) {
+const randomLocation = map => _.sample(getStates(map));
+
 const getDestination = (fromLocation, states) => {
   if (!states.includes(fromLocation)) throw new Error('A state is not on a map');
   if (states.length === 1) throw new Error('Not enough states');
@@ -17,7 +19,46 @@ const createTaskList = (map, n) => _.range(n).map(() => {
     stage: 'unstarted',
   };
 });
-  });
-}
 
-module.exports = { getDestination, createToDoList };
+const startTask = (task) => {
+  task.stage = 'started';
+};
+
+const finishTask = (task) => {
+  task.stage = 'finished';
+};
+
+const isTaskStarted = task => task.stage === 'started';
+
+const isUnstartedTask = task => task.stage === 'unstarted';
+
+const isMatchFromLocation = (task, location) => location === task.from;
+
+const isMatchToLocation = (task, location) => location === task.to;
+
+const isUnstartedTaskAtLocation = (task, location) => isMatchFromLocation(task, location) && isUnstartedTask(task);
+
+const isTaskStartedAtLocation = (task, location) => isMatchToLocation(task, location) && isTaskStarted(task);
+
+const updateTasksStage = (tasks, location) => {
+  tasks.forEach((task) => {
+    if (isUnstartedTaskAtLocation(task, location)) {
+      startTask(task);
+      console.log(`Get task at ${task.from}`);
+    }
+    if (isTaskStartedAtLocation(task, location)) {
+      finishTask(task);
+      console.log(`Finished task at ${task.to}`);
+    }
+  });
+};
+
+const areTasksToWorkOn = tasks => tasks.some(task => task.stage !== 'finished');
+
+
+module.exports = {
+  createTaskList,
+  areTasksToWorkOn,
+  updateTasksStage,
+  randomLocation,
+};
