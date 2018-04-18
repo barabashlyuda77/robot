@@ -18,4 +18,5 @@ const works = (tasks, map) => {
 
 module.exports = {
   works,
+  move,
 };

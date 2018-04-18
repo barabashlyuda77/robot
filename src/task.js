@@ -61,4 +61,5 @@ module.exports = {
   areTasksToWorkOn,
   updateTasksStage,
   randomLocation,
+  getDestination,
 };
