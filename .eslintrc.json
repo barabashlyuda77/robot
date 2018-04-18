@@ -9,5 +9,11 @@
       "sinon": true,
       "proxyquire": true,
       "expect": true
-  }
+  },
+  "rules": {
+        "no-param-reassign": ["error", { "props": false }],
+        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-console": "off",
+        "max-len": "off"
+    }
 }
