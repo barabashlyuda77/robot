@@ -5,8 +5,8 @@ const { move } = require('./robot');
 
 const villageMap = buildVillageMap(roads);
 let randomLocation = _.sample(getStates(villageMap));
-for (let i = 1; i <= roads.length; i++) {
+_.range(10).forEach((i) => {
   const from = randomLocation;
   randomLocation = move(villageMap, randomLocation);
-  console.log(`#${i} = from ${from} to ${randomLocation}`);
-}
+  console.log(`#${i + 1} = from ${from} to ${randomLocation}`);
+});
