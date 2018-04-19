@@ -1,6 +1,10 @@
 const _ = require('lodash');
 const { getStates } = require('./villageMap');
 
+const STARTED = 'started';
+const UNSTARTED = 'unstarted';
+const FINISHED = 'finished';
+
 const randomLocation = map => _.sample(getStates(map));
 
 const getDestination = (fromLocation, states) => {
@@ -16,7 +20,7 @@ const createTaskList = (map, n) => _.range(n).map(() => {
   return {
     from: fromLocation,
     to: getDestination(fromLocation, getStates(map)),
-    stage: 'unstarted',
+    stage: UNSTARTED,
   };
 });
 
@@ -28,9 +32,9 @@ const finishTask = (task) => {
   task.stage = 'finished';
 };
 
-const isTaskStarted = task => task.stage === 'started';
+const isTaskStarted = task => task.stage === STARTED;
 
-const isUnstartedTask = task => task.stage === 'unstarted';
+const isTaskUnstarted = task => task.stage === UNSTARTED;
 
 const isMatchFromLocation = (task, location) => location === task.from;
 
