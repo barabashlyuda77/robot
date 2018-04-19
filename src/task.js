@@ -1,11 +1,9 @@
 const _ = require('lodash');
-const { getStates } = require('./villageMap');
+const { getStates, randomLocation } = require('./villageMap');
 
 const STARTED = 'started';
 const UNSTARTED = 'unstarted';
 const FINISHED = 'finished';
-
-const randomLocation = map => _.sample(getStates(map));
 
 const getDestination = (fromLocation, states) => {
   if (!states.includes(fromLocation)) throw new Error('A state is not on a map');
