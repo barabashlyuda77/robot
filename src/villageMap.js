@@ -1,3 +1,5 @@
+const _ = require('lodash');
+
 const buildVillageMap = (edges) => {
   const map = {};
 
@@ -19,7 +21,10 @@ const buildVillageMap = (edges) => {
 
 const getStates = map => Object.keys(map);
 
+const randomLocation = map => _.sample(getStates(map));
+
 module.exports = {
   buildVillageMap,
   getStates,
+  randomLocation,
 };
