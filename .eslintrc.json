@@ -11,7 +11,7 @@
       "expect": true
   },
   "rules": {
-        "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+        "no-plusplus": "off",
         "no-console": "off"
     }
 }
