@@ -54,8 +54,9 @@ const updateTasksStage = (tasks, location) => {
     }
   });
 };
+const isTaskFinished = task => task.stage === FINISHED;
 
-const areTasksToWorkOn = tasks => tasks.some(task => task.stage !== 'finished');
+const areTasksToWorkOn = tasks => tasks.some(task => !isTaskFinished(task));
 
 
 module.exports = {
