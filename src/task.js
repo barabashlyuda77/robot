@@ -36,9 +36,11 @@ const isMatchFromLocation = (task, location) => location === task.from;
 
 const isMatchToLocation = (task, location) => location === task.to;
 
-const isUnstartedTaskAtLocation = (task, location) => isMatchFromLocation(task, location) && isUnstartedTask(task);
+const isUnstartedTaskAtLocation = (task, location) =>
+  isMatchFromLocation(task, location) && isTaskUnstarted(task);
 
-const isTaskStartedAtLocation = (task, location) => isMatchToLocation(task, location) && isTaskStarted(task);
+const isStartedTaskAtLocation = (task, location) =>
+  isMatchToLocation(task, location) && isTaskStarted(task);
 
 const updateTasksStage = (tasks, location) => {
   tasks.forEach((task) => {
