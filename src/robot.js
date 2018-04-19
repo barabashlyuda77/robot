@@ -1,5 +1,6 @@
 const _ = require('lodash');
-const { areTasksToWorkOn, updateTasksStage, randomLocation } = require('./task');
+const { areTasksToWorkOn, updateTasksStage } = require('./task');
+const { randomLocation } = require('./villageMap');
 
 const move = (map, location) => _.sample(map[location]);
 
