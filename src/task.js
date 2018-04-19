@@ -42,18 +42,20 @@ const isUnstartedTaskAtLocation = (task, location) =>
 const isStartedTaskAtLocation = (task, location) =>
   isMatchToLocation(task, location) && isTaskStarted(task);
 
-const updateTasksStage = (tasks, location) => {
-  tasks.forEach((task) => {
+const updateTasksStage = (tasks, location) => (
+  tasks.map((task) => {
     if (isUnstartedTaskAtLocation(task, location)) {
-      startTask(task);
       console.log(`Get task at ${task.from}`);
+      return startTask(task);
     }
-    if (isTaskStartedAtLocation(task, location)) {
-      finishTask(task);
+    if (isStartedTaskAtLocation(task, location)) {
       console.log(`Finished task at ${task.to}`);
+      return finishTask(task);
     }
-  });
-};
+    return task;
+  })
+);
+
 const isTaskFinished = task => task.stage === FINISHED;
 
 const areTasksToWorkOn = tasks => tasks.some(task => !isTaskFinished(task));
