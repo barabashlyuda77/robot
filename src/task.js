@@ -1,21 +1,70 @@
 const _ = require('lodash');
+const { getStates } = require('./villageMap');
 
-function getDestination(fromLocation, states) {
+const STARTED = 'started';
+const UNSTARTED = 'unstarted';
+const FINISHED = 'finished';
+
+const randomLocation = map => _.sample(getStates(map));
+
+const getDestination = (fromLocation, states) => {
   if (!states.includes(fromLocation)) throw new Error('A state is not on a map');
   if (states.length === 1) throw new Error('Not enough states');
 
   const destination = _.sample(states);
   return (fromLocation === destination) ? getDestination(fromLocation, states) : destination;
-}
+};
 
-function createToDoList(states, n) {
-  return _.range(n).map(() => {
-    const fromLocation = _.sample(states);
-    return {
-      from: fromLocation,
-      to: getDestination(fromLocation, states),
-    };
-  });
-}
+const createTaskList = (map, n) => _.range(n).map(() => {
+  const fromLocation = randomLocation(map);
+  return {
+    from: fromLocation,
+    to: getDestination(fromLocation, getStates(map)),
+    stage: UNSTARTED,
+  };
+});
 
-module.exports = { getDestination, createToDoList };
+const startTask = task => ({ ...task, stage: STARTED });
+
+const finishTask = task => ({ ...task, stage: FINISHED });
+
+const isTaskStarted = task => task.stage === STARTED;
+
+const isTaskUnstarted = task => task.stage === UNSTARTED;
+
+const isMatchFromLocation = (task, location) => location === task.from;
+
+const isMatchToLocation = (task, location) => location === task.to;
+
+const isUnstartedTaskAtLocation = (task, location) =>
+  isMatchFromLocation(task, location) && isTaskUnstarted(task);
+
+const isStartedTaskAtLocation = (task, location) =>
+  isMatchToLocation(task, location) && isTaskStarted(task);
+
+const updateTasksStage = (tasks, location) => (
+  tasks.map((task) => {
+    if (isUnstartedTaskAtLocation(task, location)) {
+      console.log(`Get task at ${task.from}`);
+      return startTask(task);
+    }
+    if (isStartedTaskAtLocation(task, location)) {
+      console.log(`Finished task at ${task.to}`);
+      return finishTask(task);
+    }
+    return task;
+  })
+);
+
+const isTaskFinished = task => task.stage === FINISHED;
+
+const areTasksToWorkOn = tasks => tasks.some(task => !isTaskFinished(task));
+
+
+module.exports = {
+  createTaskList,
+  areTasksToWorkOn,
+  updateTasksStage,
+  randomLocation,
+  getDestination,
+};

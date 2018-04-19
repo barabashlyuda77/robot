@@ -1,12 +1,9 @@
-const _ = require('lodash');
 const roads = require('../src/config/roads');
-const { buildVillageMap, getStates } = require('./villageMap');
-const { move } = require('./robot');
+const { buildVillageMap } = require('./villageMap');
+const robot = require('./robot');
+const { createTaskList } = require('./task');
 
 const villageMap = buildVillageMap(roads);
-let randomLocation = _.sample(getStates(villageMap));
-_.range(10).forEach((i) => {
-  const from = randomLocation;
-  randomLocation = move(villageMap, randomLocation);
-  console.log(`#${i + 1} = from ${from} to ${randomLocation}`);
-});
+const taskList = createTaskList(villageMap, 1);
+console.log('Tasks', taskList);
+console.log(robot.works(taskList, villageMap));

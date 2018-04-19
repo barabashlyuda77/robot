@@ -9,5 +9,9 @@
       "sinon": true,
       "proxyquire": true,
       "expect": true
-  }
+  },
+  "rules": {
+        "no-plusplus": "off",
+        "no-console": "off"
+    }
 }

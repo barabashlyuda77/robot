@@ -1,13 +1,15 @@
-function buildVillageMap(edges) {
+const _ = require('lodash');
+
+const buildVillageMap = (edges) => {
   const map = {};
 
-  function addEdge(from, to) {
+  const addEdge = (from, to) => {
     if (!map[from]) {
       map[from] = [to];
     } else {
       map[from].push(to);
     }
-  }
+  };
 
   edges.forEach(([from, to]) => {
     addEdge(from, to);
@@ -15,11 +17,14 @@ function buildVillageMap(edges) {
   });
 
   return map;
-}
+};
 
 const getStates = map => Object.keys(map);
+
+const randomLocation = map => _.sample(getStates(map));
 
 module.exports = {
   buildVillageMap,
   getStates,
+  randomLocation,
 };

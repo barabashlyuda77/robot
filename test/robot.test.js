@@ -1,7 +1,7 @@
 const { move } = require('../src/robot');
 const { buildVillageMap } = require('../src/villageMap');
 
-describe('robot', () => {
+describe('#move', () => {
   context('when a State has one neighbour', () => {
     const map = buildVillageMap([['A', 'B']]);
 
