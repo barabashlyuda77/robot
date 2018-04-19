@@ -24,13 +24,9 @@ const createTaskList = (map, n) => _.range(n).map(() => {
   };
 });
 
-const startTask = (task) => {
-  task.stage = 'started';
-};
+const startTask = task => ({ ...task, stage: STARTED });
 
-const finishTask = (task) => {
-  task.stage = 'finished';
-};
+const finishTask = task => ({ ...task, stage: FINISHED });
 
 const isTaskStarted = task => task.stage === STARTED;
 
