@@ -5,14 +5,17 @@ const { randomLocation } = require('./villageMap');
 const move = (map, location) => _.sample(map[location]);
 
 const works = (tasks, map) => {
-  let turn;
+  let turn = 0;
   let currentLocation = randomLocation(map);
-  for (turn = 0; areTasksToWorkOn(tasks); turn++) {
-    updateTasksStage(tasks, currentLocation);
-    console.log(tasks);
+  let currentTasks = tasks;
+  while (areTasksToWorkOn(currentTasks)) {
+    currentTasks = updateTasksStage(currentTasks, currentLocation);
+    console.log('Current tasks', currentTasks);
+    console.log();
     const logFrom = `Move from ${currentLocation}`;
     currentLocation = move(map, currentLocation);
     console.log(`${logFrom} to ${currentLocation}`);
+    turn += 1;
   }
   return `Done in ${turn} turns`;
 };
