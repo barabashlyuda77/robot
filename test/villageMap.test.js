@@ -1,4 +1,4 @@
-const { buildVillageMap, getStates } = require('../src/villageMap');
+const { buildVillageMap, getStates, randomLocation } = require('../src/villageMap');
 
 describe('#buildVillageMap', () => {
   context('when creating a map with one road', () => {
@@ -46,6 +46,24 @@ describe('#getStates', () => {
 
     it('returns all this states', () => {
       expect(getStates(villageMap)).to.eql(['A', 'B', 'C', 'D']);
+    });
+  });
+});
+
+describe('#randomLocation', () => {
+  context('when creating a map two states', () => {
+    const villageMap = buildVillageMap([['A', 'B']]);
+
+    it('returns one of those two states', () => {
+      expect(randomLocation(villageMap)).to.be.oneOf(['A', 'B']);
+    });
+  });
+
+  context('when creating a map with multiple states', () => {
+    const villageMap = buildVillageMap([['A', 'B'], ['B', 'C'], ['C', 'D']]);
+
+    it('returns randomly one of created states', () => {
+      expect(randomLocation(villageMap)).to.be.oneOf(['A', 'B', 'C', 'D']);
     });
   });
 });
