@@ -1,4 +1,11 @@
-const { getDestination, createTaskList } = require('../src/task');
+const {
+  getDestination,
+  createTaskList,
+  startTask,
+  UNSTARTED,
+  STARTED,
+  FINISHED,
+} = require('../src/task');
 
 describe('#getDestination', () => {
   context('when there is one state', () => {
@@ -48,6 +55,47 @@ describe('#createTaskList', () => {
   context('when a number of task is 5', () => {
     it('returns 5 tasks in a list', () => {
       expect(createTaskList(['A', 'B', 'C'], 5).length).to.eql(5);
+    });
+  });
+});
+
+describe('#startTask', () => {
+  context('when starting unstarted task', () => {
+    const task = {
+      from: 'A',
+      to: 'B',
+      stage: UNSTARTED,
+    };
+
+    const newTask = startTask(task);
+
+    it('returns new task', () => {
+      expect(newTask).to.not.equal(task);
+    });
+    it('returns started task', () => {
+      expect(newTask.stage).to.be.equal(STARTED);
+    });
+  });
+  context('when starting started task', () => {
+    const task = {
+      from: 'A',
+      to: 'B',
+      stage: STARTED,
+    };
+
+    it('throws an error', () => {
+      expect(() => startTask(task)).to.throw('Task was already started');
+    });
+  });
+  context('when starting finished task', () => {
+    const task = {
+      from: 'A',
+      to: 'B',
+      stage: FINISHED,
+    };
+
+    it('throws an error', () => {
+      expect(() => startTask(task)).to.throw('Task was already finished');
     });
   });
 });

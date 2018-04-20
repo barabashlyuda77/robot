@@ -21,14 +21,20 @@ const createTaskList = (map, n) => _.range(n).map(() => {
     stage: UNSTARTED,
   };
 });
-
-const startTask = task => ({ ...task, stage: STARTED });
-
-const finishTask = task => ({ ...task, stage: FINISHED });
+const isTaskUnstarted = task => task.stage === UNSTARTED;
 
 const isTaskStarted = task => task.stage === STARTED;
 
-const isTaskUnstarted = task => task.stage === UNSTARTED;
+const isTaskFinished = task => task.stage === FINISHED;
+
+const startTask = (task) => {
+  if (isTaskStarted(task)) throw new Error('Task was already started');
+  if (isTaskFinished(task)) throw new Error('Task was already finished');
+
+  return ({ ...task, stage: STARTED });
+};
+
+const finishTask = task => ({ ...task, stage: FINISHED });
 
 const isMatchFromLocation = (task, location) => location === task.from;
 
@@ -54,8 +60,6 @@ const updateTasksStage = (tasks, location) => (
   })
 );
 
-const isTaskFinished = task => task.stage === FINISHED;
-
 const areTasksToWorkOn = tasks => tasks.some(task => !isTaskFinished(task));
 
 
@@ -65,4 +69,8 @@ module.exports = {
   updateTasksStage,
   randomLocation,
   getDestination,
+  startTask,
+  STARTED,
+  UNSTARTED,
+  FINISHED,
 };
