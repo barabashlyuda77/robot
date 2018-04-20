@@ -34,7 +34,12 @@ const startTask = (task) => {
   return ({ ...task, stage: STARTED });
 };
 
-const finishTask = task => ({ ...task, stage: FINISHED });
+const finishTask = (task) => {
+  if (isTaskUnstarted(task)) throw new Error('Task was not started');
+  if (isTaskFinished(task)) throw new Error('Task was already finished');
+
+  return ({ ...task, stage: FINISHED });
+};
 
 const isMatchFromLocation = (task, location) => location === task.from;
 
@@ -73,4 +78,5 @@ module.exports = {
   STARTED,
   UNSTARTED,
   FINISHED,
+  finishTask,
 };
