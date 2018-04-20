@@ -12,6 +12,7 @@ const {
   isTaskFinished,
   isMatchFromLocation,
   isMatchToLocation,
+  isUnstartedTaskAtLocation,
 } = require('../src/task');
 
 describe('#getDestination', () => {
@@ -302,6 +303,53 @@ describe('#isMatchToLocation', () => {
 
     it('returns false', () => {
       expect(isMatchToLocation(task, 'A')).to.be.false;
+    });
+  });
+});
+
+describe('#isUnstartedTaskAtLocation', () => {
+  context('when unstarted task is at fromLocation', () => {
+    const task = {
+      from: 'A',
+      to: 'B',
+      stage: UNSTARTED,
+    };
+
+    it('returns true', () => {
+      expect(isUnstartedTaskAtLocation(task, 'A')).to.be.true;
+    });
+  });
+  context('when started task is at fromLocation', () => {
+    const task = {
+      from: 'A',
+      to: 'B',
+      stage: STARTED,
+    };
+
+    it('returns false', () => {
+      expect(isUnstartedTaskAtLocation(task, 'A')).to.be.false;
+    });
+  });
+  context('when finished task is at fromLocation', () => {
+    const task = {
+      from: 'A',
+      to: 'B',
+      stage: FINISHED,
+    };
+
+    it('returns false', () => {
+      expect(isUnstartedTaskAtLocation(task, 'A')).to.be.false;
+    });
+  });
+  context('when unstarted task is at toLocation', () => {
+    const task = {
+      from: 'A',
+      to: 'B',
+      stage: STARTED,
+    };
+
+    it('returns false', () => {
+      expect(isUnstartedTaskAtLocation(task, 'B')).to.be.false;
     });
   });
 });
