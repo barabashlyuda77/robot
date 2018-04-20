@@ -353,3 +353,50 @@ describe('#isUnstartedTaskAtLocation', () => {
     });
   });
 });
+
+describe('#isStartedTaskAtLocation', () => {
+  context('when started task is at toLocation', () => {
+    const startedTask = {
+      from: 'A',
+      to: 'B',
+      stage: STARTED,
+    };
+
+    it('returns true', () => {
+      expect(isStartedTaskAtLocation(startedTask, 'B')).to.be.true;
+    });
+  });
+  context('when unstarted task is at toLocation', () => {
+    const unstartedTask = {
+      from: 'A',
+      to: 'B',
+      stage: UNSTARTED,
+    };
+
+    it('returns false', () => {
+      expect(isStartedTaskAtLocation(unstartedTask, 'B')).to.be.false;
+    });
+  });
+  context('when finished task is at toLocation', () => {
+    const finishedTask = {
+      from: 'A',
+      to: 'B',
+      stage: FINISHED,
+    };
+
+    it('returns false', () => {
+      expect(isStartedTaskAtLocation(finishedTask, 'B')).to.be.false;
+    });
+  });
+  context('when started task is at fromLocation', () => {
+    const startedTask = {
+      from: 'A',
+      to: 'B',
+      stage: STARTED,
+    };
+
+    it('returns false', () => {
+      expect(isStartedTaskAtLocation(startedTask, 'A')).to.be.false;
+    });
+  });
+});

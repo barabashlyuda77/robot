@@ -85,4 +85,5 @@ module.exports = {
   isMatchFromLocation,
   isMatchToLocation,
   isUnstartedTaskAtLocation,
+  isStartedTaskAtLocation,
 };
