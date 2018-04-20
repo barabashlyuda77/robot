@@ -62,41 +62,41 @@ describe('#createTaskList', () => {
 
 describe('#startTask', () => {
   context('when starting unstarted task', () => {
-    const task = {
+    const unstartedTask = {
       from: 'A',
       to: 'B',
       stage: UNSTARTED,
     };
 
-    const newTask = startTask(task);
+    const startedTask = startTask(unstartedTask);
 
     it('returns new task', () => {
-      expect(newTask).to.not.equal(task);
+      expect(startedTask).to.not.equal(unstartedTask);
     });
     it('returns started task', () => {
-      expect(newTask.stage).to.be.equal(STARTED);
+      expect(startedTask.stage).to.be.equal(STARTED);
     });
   });
   context('when starting started task', () => {
-    const task = {
+    const startedTask = {
       from: 'A',
       to: 'B',
       stage: STARTED,
     };
 
     it('throws an error', () => {
-      expect(() => startTask(task)).to.throw('Task was already started');
+      expect(() => startTask(startedTask)).to.throw('Task was already started');
     });
   });
   context('when starting finished task', () => {
-    const task = {
+    const finishedTask = {
       from: 'A',
       to: 'B',
       stage: FINISHED,
     };
 
     it('throws an error', () => {
-      expect(() => startTask(task)).to.throw('Task was already finished');
+      expect(() => startTask(finishedTask)).to.throw('Task was already finished');
     });
   });
 });
