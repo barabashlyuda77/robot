@@ -11,6 +11,7 @@ const {
   isTaskStarted,
   isTaskFinished,
   isMatchFromLocation,
+  isMatchToLocation,
 } = require('../src/task');
 
 describe('#getDestination', () => {
@@ -276,6 +277,31 @@ describe('#isMatchFromLocation', () => {
 
     it('returns false', () => {
       expect(isMatchFromLocation(task, 'B')).to.be.false;
+    });
+  });
+});
+
+describe('#isMatchToLocation', () => {
+  context('when task toLocation matches with a current location', () => {
+    const task = {
+      from: 'A',
+      to: 'B',
+      stage: UNSTARTED,
+    };
+
+    it('returns true', () => {
+      expect(isMatchToLocation(task, 'B')).to.be.true;
+    });
+  });
+  context('when task toLocation is not match with a current location', () => {
+    const task = {
+      from: 'A',
+      to: 'B',
+      stage: UNSTARTED,
+    };
+
+    it('returns false', () => {
+      expect(isMatchToLocation(task, 'A')).to.be.false;
     });
   });
 });
