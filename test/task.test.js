@@ -9,6 +9,7 @@ const {
   finishTask,
   isTaskUnstarted,
   isTaskStarted,
+  isTaskFinished,
 } = require('../src/task');
 
 describe('#getDestination', () => {
@@ -213,6 +214,42 @@ describe('#isTaskStarted', () => {
 
     it('returns false', () => {
       expect(isTaskStarted(finishedTask)).to.false;
+    });
+  });
+});
+
+describe('#isTaskFinished', () => {
+  context('when task is finished', () => {
+    const finishedTask = {
+      from: 'A',
+      to: 'B',
+      stage: FINISHED,
+    };
+
+    it('returns true', () => {
+      expect(isTaskFinished(finishedTask)).to.true;
+    });
+  });
+  context('when task is started', () => {
+    const startedTask = {
+      from: 'A',
+      to: 'B',
+      stage: STARTED,
+    };
+
+    it('returns false', () => {
+      expect(isTaskFinished(startedTask)).to.false;
+    });
+  });
+  context('when task is not started', () => {
+    const unstartedTask = {
+      from: 'A',
+      to: 'B',
+      stage: UNSTARTED,
+    };
+
+    it('returns false', () => {
+      expect(isTaskFinished(unstartedTask)).to.false;
     });
   });
 });
