@@ -1,3 +1,4 @@
+/* eslint-disable no-unused-expressions */
 const {
   getDestination,
   createTaskList,
@@ -7,6 +8,7 @@ const {
   FINISHED,
   finishTask,
   isTaskUnstarted,
+  isTaskStarted,
 } = require('../src/task');
 
 describe('#getDestination', () => {
@@ -175,6 +177,42 @@ describe('#isTaskUnstarted', () => {
 
     it('returns false', () => {
       expect(isTaskUnstarted(finishedTask)).to.false;
+    });
+  });
+});
+
+describe('#isTaskStarted', () => {
+  context('when task is started', () => {
+    const startedTask = {
+      from: 'A',
+      to: 'B',
+      stage: STARTED,
+    };
+
+    it('returns true', () => {
+      expect(isTaskStarted(startedTask)).to.true;
+    });
+  });
+  context('when task is not started', () => {
+    const unstartedTask = {
+      from: 'A',
+      to: 'B',
+      stage: UNSTARTED,
+    };
+
+    it('returns false', () => {
+      expect(isTaskStarted(unstartedTask)).to.false;
+    });
+  });
+  context('when task is finished', () => {
+    const finishedTask = {
+      from: 'A',
+      to: 'B',
+      stage: FINISHED,
+    };
+
+    it('returns false', () => {
+      expect(isTaskStarted(finishedTask)).to.false;
     });
   });
 });

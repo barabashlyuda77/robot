@@ -80,4 +80,5 @@ module.exports = {
   FINISHED,
   finishTask,
   isTaskUnstarted,
+  isTaskStarted,
 };
