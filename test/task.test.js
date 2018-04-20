@@ -14,6 +14,7 @@ const {
   isMatchToLocation,
   isUnstartedTaskAtLocation,
   isStartedTaskAtLocation,
+  areTasksToWorkOn,
 } = require('../src/task');
 
 describe('#getDestination', () => {
@@ -398,6 +399,99 @@ describe('#isStartedTaskAtLocation', () => {
 
     it('returns false', () => {
       expect(isStartedTaskAtLocation(startedTask, 'A')).to.be.false;
+    });
+  });
+});
+
+describe('#areTasksToWorkOn', () => {
+  context('when a task list is empty', () => {
+    it('returns false', () => {
+      expect(areTasksToWorkOn([])).to.be.false;
+    });
+    context('when a task list has one unstarted task', () => {
+      const taskList = [
+        {
+          from: 'A',
+          to: 'B',
+          stage: UNSTARTED,
+        },
+      ];
+
+      it('returns true', () => {
+        expect(areTasksToWorkOn(taskList)).to.be.true;
+      });
+    });
+    context('when a task list has one started task', () => {
+      const taskList = [
+        {
+          from: 'A',
+          to: 'B',
+          stage: STARTED,
+        },
+      ];
+
+      it('returns true', () => {
+        expect(areTasksToWorkOn(taskList)).to.be.true;
+      });
+    });
+    context('when a task list has one finished task', () => {
+      const taskList = [
+        {
+          from: 'A',
+          to: 'B',
+          stage: FINISHED,
+        },
+      ];
+
+      it('returns false', () => {
+        expect(areTasksToWorkOn(taskList)).to.be.false;
+      });
+    });
+    context('when a task list has multiple tasks where one task is unstarted', () => {
+      const taskList = [
+        {
+          from: 'A',
+          to: 'B',
+          stage: UNSTARTED,
+        },
+        {
+          from: 'B',
+          to: 'C',
+          stage: FINISHED,
+        },
+        {
+          from: 'C',
+          to: 'D',
+          stage: FINISHED,
+        },
+      ];
+
+      it('returns true', () => {
+        expect(areTasksToWorkOn(taskList)).to.be.true;
+      });
+    });
+    context('when a task list has multiple finished tasks', () => {
+      const taskList = [
+        {
+          from: 'A',
+          to: 'B',
+          stage: FINISHED,
+        },
+        {
+          from: 'B',
+          to: 'C',
+          stage: FINISHED,
+        },
+        {
+          from: 'C',
+          to: 'D',
+          stage: FINISHED,
+        },
+      ];
+
+      it('returns true', () => {
+        expect(areTasksToWorkOn(taskList)).to.be.false;
+      });
     });
   });
 });
