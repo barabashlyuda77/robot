@@ -6,6 +6,7 @@ const {
   STARTED,
   FINISHED,
   finishTask,
+  isTaskUnstarted,
 } = require('../src/task');
 
 describe('#getDestination', () => {
@@ -138,6 +139,42 @@ describe('#finishTask', () => {
 
     it('throws an error', () => {
       expect(() => finishTask(finishedTask)).to.throw('Task was already finished');
+    });
+  });
+});
+
+describe('#isTaskUnstarted', () => {
+  context('when task is not started', () => {
+    const unstartedTask = {
+      from: 'A',
+      to: 'B',
+      stage: UNSTARTED,
+    };
+
+    it('returns true', () => {
+      expect(isTaskUnstarted(unstartedTask)).to.true;
+    });
+  });
+  context('when task is in the progress', () => {
+    const startedTask = {
+      from: 'A',
+      to: 'B',
+      stage: STARTED,
+    };
+
+    it('returns false', () => {
+      expect(isTaskUnstarted(startedTask)).to.false;
+    });
+  });
+  context('when task is finished', () => {
+    const finishedTask = {
+      from: 'A',
+      to: 'B',
+      stage: FINISHED,
+    };
+
+    it('returns false', () => {
+      expect(isTaskUnstarted(finishedTask)).to.false;
     });
   });
 });
