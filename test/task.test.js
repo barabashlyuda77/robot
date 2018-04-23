@@ -607,6 +607,12 @@ describe('#updateTasksStage', () => {
         },
       ]);
     });
+    it('should log to console that tasks were started and finished', () => {
+      updateTasksStage(taskList, currentLocation);
+      expect(console.log.calledTwice).to.be.true;
+      expect(console.log.calledWith(`Get task at ${currentLocation}`)).to.be.true;
+      expect(console.log.calledWith(`Finished task at ${currentLocation}`)).to.be.true;
+    });
   });
   context('when a task list is empty', () => {
     it('returns a new empty task list', () => {
