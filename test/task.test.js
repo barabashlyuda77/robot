@@ -1,4 +1,6 @@
 /* eslint-disable no-unused-expressions */
+const sinon = require('sinon');
+
 const {
   getDestination,
   createTaskList,
@@ -15,6 +17,7 @@ const {
   isUnstartedTaskAtLocation,
   isStartedTaskAtLocation,
   areTasksToWorkOn,
+  updateTasksStage,
 } = require('../src/task');
 
 describe('#getDestination', () => {
@@ -492,6 +495,122 @@ describe('#areTasksToWorkOn', () => {
       it('returns true', () => {
         expect(areTasksToWorkOn(taskList)).to.be.false;
       });
+    });
+  });
+});
+
+describe('#updateTasksStage', () => {
+  beforeEach(() => {
+    sinon.spy(console, 'log');
+  });
+
+  afterEach(() => {
+    console.log.restore();
+  });
+
+  context('when a task list contains an unstarted task that should be started at a current location', () => {
+    const taskList = [
+      {
+        from: 'A',
+        to: 'B',
+        stage: UNSTARTED,
+      },
+    ];
+    const currentLocation = 'A';
+
+    it('returns a new task list that contains a started task', () => {
+      expect(updateTasksStage(taskList, currentLocation)).to.be.eql([
+        {
+          from: 'A',
+          to: 'B',
+          stage: STARTED,
+        },
+      ]);
+    });
+    it('should log to console a task that was started', () => {
+      updateTasksStage(taskList, currentLocation);
+      expect(console.log.calledOnce).to.be.true;
+      expect(console.log.calledWith(`Get task at ${currentLocation}`)).to.be.true;
+    });
+  });
+  context('when a task list contains a started task that should be finished at a current location', () => {
+    const taskList = [
+      {
+        from: 'A',
+        to: 'B',
+        stage: STARTED,
+      },
+    ];
+    const currentLocation = 'B';
+
+    it('returns a new task list with finished task', () => {
+      expect(updateTasksStage(taskList, currentLocation)).to.be.eql([
+        {
+          from: 'A',
+          to: 'B',
+          stage: FINISHED,
+        },
+      ]);
+    });
+    it('should log to console a task that was finished', () => {
+      updateTasksStage(taskList, currentLocation);
+      expect(console.log.calledOnce).to.be.true;
+      expect(console.log.calledWith(`Finished task at ${currentLocation}`)).to.be.true;
+    });
+  });
+  context('when a task list contains a finished task that was started at a current location', () => {
+    const taskList = [
+      {
+        from: 'A',
+        to: 'B',
+        stage: FINISHED,
+      },
+    ];
+    const currentLocation = 'A';
+
+    it('returns a new task list with the same finished task', () => {
+      expect(updateTasksStage(taskList, currentLocation)).to.be.eql([
+        {
+          from: 'A',
+          to: 'B',
+          stage: FINISHED,
+        },
+      ]);
+    });
+  });
+  context('when a task list contains two tasks that should be started and finished at a current location', () => {
+    const taskList = [
+      {
+        from: 'A',
+        to: 'B',
+        stage: UNSTARTED,
+      },
+      {
+        from: 'C',
+        to: 'A',
+        stage: STARTED,
+      },
+    ];
+    const currentLocation = 'A';
+
+    it('returns a new task list with started and finished tasks', () => {
+      expect(updateTasksStage(taskList, currentLocation)).to.be.eql([
+        {
+          from: 'A',
+          to: 'B',
+          stage: STARTED,
+        },
+        {
+          from: 'C',
+          to: 'A',
+          stage: FINISHED,
+        },
+      ]);
+    });
+  });
+  context('when a task list is empty', () => {
+    it('returns a new empty task list', () => {
+      expect(updateTasksStage([], '')).to.be.eql([]);
     });
   });
 });
