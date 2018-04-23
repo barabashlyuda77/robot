@@ -72,7 +72,6 @@ module.exports = {
   createTaskList,
   areTasksToWorkOn,
   updateTasksStage,
-  randomLocation,
   getDestination,
   startTask,
   STARTED,
