@@ -10,7 +10,7 @@ const works = (tasks, map) => {
   let currentTasks = tasks;
   while (areTasksToWorkOn(currentTasks)) {
     currentTasks = updateTasksStage(currentTasks, currentLocation);
-    console.log('Current tasks', currentTasks);
+    console.log(currentTasks);
     console.log();
     const logFrom = `Move from ${currentLocation}`;
     currentLocation = move(map, currentLocation);
