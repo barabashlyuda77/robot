@@ -29,7 +29,8 @@
     "nodemon": "^1.17.3",
     "proxyquire": "^2.0.1",
     "sinon": "^4.5.0",
-    "sinon-chai": "^3.0.0"
+    "sinon-chai": "^3.0.0",
+    "webpack": "^4.6.0"
   },
   "dependencies": {
     "express": "^4.16.3",
